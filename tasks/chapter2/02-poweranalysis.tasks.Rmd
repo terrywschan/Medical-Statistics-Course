@@ -49,7 +49,7 @@ pwr.t.test(n = NULL, d = mean.diff/pooled.sd, sig.level = 0.05, power = 0.9, alt
 
 ```
 
-Finally devise the pooled standard deviation by 2. What would be then the the needed sample sizes for a power of 80% and 90%?
+Finally devide the pooled standard deviation by 2. What would be then the the needed sample sizes for a power of 80% and 90%?
 
 ```{r}
 pooled.sd.2 <- pooled.sd/2

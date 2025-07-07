@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = param, eval= param, include=T)
 ```
 
-```{r,echo=F}
+```{r echo=F}
 library(statmod)
 ```
 
