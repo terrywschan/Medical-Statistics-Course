@@ -9,15 +9,13 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks
 
+Consider the `Melanoma` data set.
 
-1. Make Kaplan-Meier curves to the Melanoma data using the same `Surv` object defined above, i.e. with both censoring categories combined into a single one. Do this both for the entire data together, as well as for the observations according to gender. Compute the log-rank test to check whether there is evidence that the two survival probability curves are different.
-
-
+- Make Kaplan-Meier curves using the same `Surv` object defined above, i.e. with both censoring categories combined into a single one. Do this both for the entire data together, as well as for the observations according to gender.
 
 ```{r}
 survm <- Surv(Melanoma$time, Melanoma$status == 1)
 ```
-
 
 ```{r}
 plot(survfit(survm ~ 1))
@@ -27,11 +25,13 @@ plot(survfit(survm ~ 1))
 plot(survfit(survm ~ Melanoma$sex))
 ```
 
+- Compute the log-rank test to check whether there is evidence that the two survival probability curves are different.
+
 ```{r}
 survdiff(survm ~ Melanoma$sex)
 ```
 
-2. Let us consider again the `leuk` example with overall survival data of leukemia cases, of the package `MASS`. 
+Let us consider again the `leuk` example with overall survival data of leukemia cases, of the package `MASS`. 
 
 ```{r}
 library(MASS)
@@ -41,29 +41,33 @@ str(leuk)
 
 We define again the response as a function of `time` only, since all patients experience an event (death). Subsequently, we fit a survival regression of the survival response as a function of `ag` and of white blood cell count `wbc`. We will use Cox regression for this.
 
-First, let us examine the nature of the relationship between `time` and the covariates `ag` and `wbc`. For this, we make a graph. We use `time` on the log-scale, as this is equivalent to what happens in the regression model:
+- First, let us examine the nature of the relationship between `time` and the covariates `ag` and `wbc`. For this, we `log(time)` against each covariate. We are plotting `time` on the log-scale, as this is equivalent to what happens in the regression model.
 
 ```{r, fig.width = 10, fig.height = 5}
 par(mfrow = c(1, 2))
 plot(log(time) ~ ag + wbc, data = leuk)
 ```
 
-The covariate `wbc` has many small values and only a few large ones. This is characteristic of a variable on an exponential scale. So we take its logarithm and produce the plot again:
+- The covariate `wbc` has many small values and only a few large ones. This is characteristic of a variable on an exponential scale. So let's take its logarithm and make the plot again.
 
 ```{r}
 plot(log(time) ~ log(wbc), data = leuk)
 ```
 
-This relationship seems to be closer to linear. So, we will include `wbc` in the model with a log-transformation.
+    This relationship seems to be closer to linear. So, we will include `wbc` in the model with a log-transformation.
 
-A Cox regression is fitted via the function `coxph` which, as regression functions `lm` and `glm`, expect a formula as input. The formula relates the `Surv` response to the covariates, in this case `ag` and `log(wbc)`:
+- Now let's perform a Cox regression using the function `coxph()`.
+
+    The `coxph()` function, like the regression functions `lm` and `glm`, expect a formula as input. The formula uses a `Surv` object as response on the left hand side, and the covariates on the right hand side (in this case `ag` and `log(wbc)`).
 
 ```{r}
 leuk.cox <- coxph(Surv(time) ~ ag + log(wbc), data = leuk)
 summary(leuk.cox)
 ```
 
-3. Consider again the Melanoma data, and now define `sex` as 1 for females and 0 for males. Fit the Cox regression model again and compare results with those when `sex` was used with the original coding. 
+Consider again the Melanoma data, and now define `sex` as 1 for females and 0 for males.
+
+- Fit the Cox regression model again and compare results with those when `sex` was used with the original coding. 
 
 ```{r}
 sex1 <- 1 - Melanoma$sex

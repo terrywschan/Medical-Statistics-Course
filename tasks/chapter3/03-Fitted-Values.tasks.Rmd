@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks 
 
-1. Continue examining the example of budworms. Fit now the model including the interaction between `ldose` and `sex`. Print the ANOVA table with a test for each coefficient. Extract the fitted probabilities on the scale of the response. 
+- Continue examining the example of budworms. Fit now the model including the interaction between `ldose` and `sex`. Print the ANOVA table with a test for each coefficient. Extract the fitted probabilities on the scale of the response. 
 
 ```{r}
 budworm.lgi <- glm(resp ~ sex + ldose + sex:ldose, family = binomial)
@@ -19,7 +19,7 @@ myfitted <- predict(budworm.lgi, type = "response")
 ```
 
 
-2. For the `esoph` data analysis, extract the fitted values for the model without and with the interaction. Put those together in a matrix.
+- For the `esoph` data analysis, extract the fitted values for the model without and with the interaction. Put those together in a matrix.
 
 ```{r}
 

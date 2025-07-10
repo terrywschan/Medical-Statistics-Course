@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick Task
 
-Perform the Student's t test and the Wilcoxon rank-sum test to compare the performances of athletes on the 100m event between the competitions.  
+- Perform the Student's t test and the Wilcoxon rank-sum test to compare the performances of athletes on the 100m event between the competitions.  
 
 ```{r}
 library(factoextra)
@@ -19,9 +19,9 @@ t.test(X100m ~ Competition, data = decathlon2)
 wilcox.test(X100m ~ Competition, data = decathlon2)
 ```
 
-Now compute for each events and the total number of points between both events in the `decathlon2` dataset the p-values obtained by the student's t test and the wilcoxon test. Display the p-values of both tests for each variable in a data frame. Do you see any differences between the tests?
+- Now compute for each events and the total number of points between both events in the `decathlon2` dataset the p-values obtained by the student's t test and the wilcoxon test. Display the p-values of both tests for each variable in a data frame. Do you see any differences between the tests?
 
-*Hint : you can create a function that will compute both p-values for one event and use the function `sapply` to apply it to all events.*
+    *Hint : you can create a function that will compute both p-values for one event and use the function `sapply` to apply it to all events.*
 
 ```{r}
 

@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks
 
-Let us go back to the `decathlon2` dataset and compute the mean, and the standard deviation. 
+- Let us go back to the `decathlon2` dataset and compute the mean, and the standard deviation. 
 
 ```{r}
 names(decathlon2)
@@ -23,7 +23,7 @@ sd.variables.Decastar <- apply(data.Decastar, 2, sd, na.rm=T)
 sd.variables.OlympicGames <- apply(data.OlympicGames, 2, sd, na.rm=T)
 ```
 
-Now compute the median, and the median absolute deviation for each event and the total number of points for each competition.
+- Now compute the median, and the median absolute deviation for each event and the total number of points for each competition.
 
 ```{r}
 data.Decastar <- decathlon2[decathlon2$Competition == 'Decastar', c(1:10,12)]

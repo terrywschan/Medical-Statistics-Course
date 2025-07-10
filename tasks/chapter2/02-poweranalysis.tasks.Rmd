@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick Tasks
 
-Compute the mean difference between the performances in long jump at the OlympicGames and Decastar. Compute the pooled standard deviation of the long jump event. What is the probability to detect a significant difference with a Student's t test in long jump performances within the `decathlon2` study? (as we have different sample sizes per group use the function *pwr.t2n.test*)
+- Compute the mean difference between the performances in long jump at the OlympicGames and Decastar. Compute the pooled standard deviation of the long jump event. What is the probability to detect a significant difference with a Student's t test in long jump performances within the `decathlon2` study? (as we have different sample sizes per group use the function `pwr.t2n.test()`)
 
 ```{r}
 
@@ -37,7 +37,7 @@ power.analysis <- pwr.t2n.test(n1 = samplesize.Decastar, n2 = samplesize.Olympic
 
 ```
 
-Compute what would be the needed sample size to obtain a power of 80%? and a power of 90%? (we will consider two group of the same size so here use *pwr.t.test*)
+- Compute what would be the needed sample size to obtain a power of 80%? and a power of 90%? (we will consider two group of the same size so here use *pwr.t.test*)
 
 ```{r}
 
@@ -49,7 +49,7 @@ pwr.t.test(n = NULL, d = mean.diff/pooled.sd, sig.level = 0.05, power = 0.9, alt
 
 ```
 
-Finally devide the pooled standard deviation by 2. What would be then the the needed sample sizes for a power of 80% and 90%?
+- Finally, divide the pooled standard deviation by 2. What would be then the the needed sample sizes for a power of 80% and 90%?
 
 ```{r}
 pooled.sd.2 <- pooled.sd/2

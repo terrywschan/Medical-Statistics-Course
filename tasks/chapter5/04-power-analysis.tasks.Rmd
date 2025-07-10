@@ -21,7 +21,7 @@ get.ssize.surv <- function(beta, alpha=0.05, p1=0.5, b1=0.5, pevents=1)
 
 ### Quick tasks
 
-1. Consider again the leukemia data, for which a Cox model was fitted to understand how `ag` and `log(wbc)` affect prognosis. Compute the sample size required to find the same effect size for `ag` as in this data, using a significance level of $\alpha=0.005$.
+- Consider again the leukemia data, for which a Cox model was fitted to understand how `ag` and `log(wbc)` affect prognosis. Compute the sample size required to find the same effect size for `ag` as in this data, using a significance level of $\alpha=0.005$.
 
 ```{r}
 leuk.cox <- coxph(Surv(time) ~ ag + log(wbc), data = leuk)
