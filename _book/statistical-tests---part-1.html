@@ -512,7 +512,7 @@ As we can see 0 is not in this range allowing us to, once again, reject the null
 ## mean in group A mean in group B 
 ##      0.07988438      0.33386405</code></pre>
 <p>We can see that even if we simulated both variables from different distributions depending on the group. We ended up with one test detecting significant differences between the groups and the other one not detecting differences.
-Typically, there are 4 different possible outcomes from a statistical test::</p>
+Typically, there are 4 different possible outcomes from a statistical test:</p>
 <table>
 <thead>
 <tr class="header">
@@ -567,7 +567,7 @@ Here we use <span class="math inline">\(\alpha = 0.05\)</span>, so we assign hal
 <ul>
 <li>Increasing the sample size</li>
 <li>Decreasing the variability of the samples</li>
-<li>Increasing the level <span class="math inline">\(alpha\)</span> , i.e. increasing the chance of false positives</li>
+<li>Increasing the level <span class="math inline">\(\alpha\)</span> , i.e. increasing the chance of false positives</li>
 </ul>
 <p>As the latter is not advisable in most studies, the easiest approach to influence the power of the test is to increase the sample size. Let’s compute the power to reject the null hypothesis in our example. To do so we can for example use the function <code>pwr.t.test</code> or power from the R package <em>pwr</em>. The function has four different argument :</p>
 <ul>
