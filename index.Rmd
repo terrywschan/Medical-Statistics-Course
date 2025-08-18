@@ -88,8 +88,6 @@ The materials contain a [`data` directory](https://github.com/rxmenezes/RcourseN
 
 ## Programme {-}
 
-Third NKI edition, Novermber 22nd, 23rd, 24th, 25th and 26th 2021
-
-This course will be given online via Zoom. All course days are in the period 9:00-16:00, with the last hour reserved for general Q&A.
+This course will be given in lecture room Z4 at the NKI. All course days are in the period 9:00-16:00, with the last hour reserved for general Q&A.
 
 
