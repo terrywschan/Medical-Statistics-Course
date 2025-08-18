@@ -3,6 +3,11 @@ introduction-to-probabilistic-distributions
 motivation
 discrete-random-variables
 continuous-random-variable
+r-functions
+probability-density-function-e.g.-dnorm-dbinom-dunif
+cumulative-probability-function-e.g.-pnorm-pbinom-punif
+quantile-function-e.g.-qnorm-qbinom-qunif
+random-number-generator-e.g.-rnorm-rbinom-runif
 data-representation
 motivating-example
 working-example
@@ -40,7 +45,7 @@ motivation-7
 working-examples-1
 general-setup
 working-examples-cont
-the-chi-square-test
+the-chi-squared-test
 working-examples-cont-1
 fishers-exact-test
 working-examples-cont-2
@@ -48,7 +53,7 @@ testing-independence-in-nx2-tables
 motivation-8
 working-examples-2
 general-setup-1
-chi-square-test-for-nx2-tables
+chi-squared-test-for-nx2-tables
 working-examples-cont-3
 testing-symmetry-in-2x2-tables
 motivation-9
@@ -66,7 +71,7 @@ poisson-regression-models
 power-for-analysis-of-count-tables
 motivation-11
 fishers-exact-test-1
-chi-square-test
+chi-squared-test
 odds-ratio-1
 notes-1
 survival-analysis
@@ -96,6 +101,7 @@ notes-2
 survival-analysis---notes
 other-types-of-censoring
 right--left--and-interval-censoring
+left-truncation-delayed-entry
 type-i-and-type-ii-censoring
 competing-risks
 exercises
