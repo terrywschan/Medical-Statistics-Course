@@ -342,9 +342,11 @@ display: none;
 
 <div id="quick-task" class="section level3">
 <h3>Quick Task</h3>
-<p>Perform the Student’s t test and the Wilcoxon rank-sum test to
+<ul>
+<li>Perform the Student’s t test and the Wilcoxon rank-sum test to
 compare the performances of athletes on the 100m event between the
-competitions.</p>
+competitions.</li>
+</ul>
 <pre class="r"><code>library(factoextra)
 data(decathlon2)
 t.test(X100m ~ Competition, data = decathlon2)</code></pre>
@@ -352,36 +354,32 @@ t.test(X100m ~ Competition, data = decathlon2)</code></pre>
 ##  Welch Two Sample t-test
 ## 
 ## data:  X100m by Competition
-## t = 4.1121, df = 22.882, p-value =
-## 0.0004294
+## t = 4.1121, df = 22.882, p-value = 0.0004294
 ## alternative hypothesis: true difference in means between group Decastar and group OlympicG is not equal to 0
 ## 95 percent confidence interval:
 ##  0.1754888 0.5309947
 ## sample estimates:
-## mean in group Decastar 
-##               11.17538 
-## mean in group OlympicG 
-##               10.82214</code></pre>
+## mean in group Decastar mean in group OlympicG 
+##               11.17538               10.82214</code></pre>
 <pre class="r"><code>wilcox.test(X100m ~ Competition, data = decathlon2)</code></pre>
-<pre><code>## Warning in wilcox.test.default(x =
-## DATA[[1L]], y = DATA[[2L]], ...):
-## impossible de calculer la p-value
-## exacte avec des ex-aequos</code></pre>
+<pre><code>## Warning in wilcox.test.default(x = DATA[[1L]], y = DATA[[2L]], ...):
+## impossible de calculer la p-value exacte avec des ex-aequos</code></pre>
 <pre><code>## 
-##  Wilcoxon rank sum test with
-##  continuity correction
+##  Wilcoxon rank sum test with continuity correction
 ## 
 ## data:  X100m by Competition
 ## W = 158, p-value = 0.001247
 ## alternative hypothesis: true location shift is not equal to 0</code></pre>
-<p>Now compute for each events and the total number of points between
-both events in the <code>decathlon2</code> dataset the p-values obtained
-by the student’s t test and the wilcoxon test. Display the p-values of
-both tests for each variable in a data frame. Do you see any differences
-between the tests?</p>
+<ul>
+<li><p>Now compute for each events and the total number of points
+between both events in the <code>decathlon2</code> dataset the p-values
+obtained by the student’s t test and the wilcoxon test. Display the
+p-values of both tests for each variable in a data frame. Do you see any
+differences between the tests?</p>
 <p><em>Hint : you can create a function that will compute both p-values
 for one event and use the function <code>sapply</code> to apply it to
-all events.</em></p>
+all events.</em></p></li>
+</ul>
 <pre class="r"><code>events &lt;- colnames(decathlon2)[c(1:10,12)]
 
 two.test &lt;- function(response, covariate, dataset){

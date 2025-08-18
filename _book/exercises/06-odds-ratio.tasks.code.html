@@ -342,12 +342,14 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<p>Compute now the odds ratio of developing colon cancer given high BMI,
-compared to that given normal or low BMI.</p>
+<ul>
+<li>Compute now the odds ratio of developing colon cancer given high
+BMI, compared to that given normal or low BMI.</li>
+</ul>
 <pre class="r"><code>myt &lt;- table(data.colon$colon.cancer, data.colon$bmi)
 or &lt;- (myt[2, 2]/myt[1, 2])/(myt[2, 1]/myt[1, 1])
 or</code></pre>
-<pre><code>## [1] 0.2184076</code></pre>
+<pre><code>## [1] 4.578595</code></pre>
 </div>
 
 

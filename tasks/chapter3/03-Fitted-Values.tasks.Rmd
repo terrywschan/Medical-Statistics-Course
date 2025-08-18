@@ -9,6 +9,18 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks 
 
+```{r,echo=F, eval=T}
+
+dose <- c(1, 2, 4, 8, 16, 32)
+ldose <- log2(dose)
+numdead <- c(1, 4, 9, 13, 18, 20, 0, 2, 6, 10, 12, 16)
+ldose <- rep(ldose, 2)
+sex <- rep(c("male", "female"), each = length(dose))
+resp <- cbind(numdead, numalive = 20 - numdead)
+
+```
+
+
 - Continue examining the example of budworms. Fit now the model including the interaction between `ldose` and `sex`. Print the ANOVA table with a test for each coefficient. Extract the fitted probabilities on the scale of the response. 
 
 ```{r}

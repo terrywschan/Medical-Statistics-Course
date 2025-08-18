@@ -351,8 +351,16 @@ explanatory variable <code>bmi</code> (categorized as either
 <code>high</code> or <code>normal-low</code>) and the response
 <code>colon.cancer</code> (categorized as 1 for cases and 0 for
 controls) is:</p>
-<p>Compute the relative risk of developing colon cancer given high BMI,
-compared to that given normal or low BMI.</p>
+<pre class="r"><code>data.colon &lt;- read.delim(&quot;data_colon_RR_OR.txt&quot;)
+table(data.colon$colon.cancer, data.colon$bmi)</code></pre>
+<pre><code>##    
+##     normal-low high
+##   0        185  115
+##   1         65  185</code></pre>
+<ul>
+<li>Compute the relative risk of developing colon cancer given high BMI,
+compared to that given normal or low BMI.</li>
+</ul>
 </div>
 
 

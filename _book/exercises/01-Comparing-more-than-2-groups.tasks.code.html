@@ -342,32 +342,28 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<p>Let us now consider the <code>quine</code> data again. Use both the F
-test as well as the Kruskal-Wallis test to decide if the number of days
-of absence differs between age groups.</p>
+<ul>
+<li>Let us now consider the <code>quine</code> data again. Use both the
+F test as well as the Kruskal-Wallis test to decide if the number of
+days of absence differs between age groups.</li>
+</ul>
 <pre class="r"><code>library(MASS)
 myfit &lt;- lm(Days ~ Age, data = quine)
 anova(myfit)</code></pre>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Days
-##            Df Sum Sq Mean Sq F value
-## Age         3   2535  845.04  3.3547
-## Residuals 142  35769  251.90        
-##            Pr(&gt;F)  
-## Age       0.02074 *
-## Residuals          
+##            Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+## Age         3   2535  845.04  3.3547 0.02074 *
+## Residuals 142  35769  251.90                  
 ## ---
-## Signif. codes:  
-##   0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05
-##   &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>kruskal.test(Days ~ Age, data = quine)</code></pre>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
 ## data:  Days by Age
-## Kruskal-Wallis chi-squared =
-## 7.6347, df = 3, p-value = 0.0542</code></pre>
+## Kruskal-Wallis chi-squared = 7.6347, df = 3, p-value = 0.0542</code></pre>
 </div>
 
 

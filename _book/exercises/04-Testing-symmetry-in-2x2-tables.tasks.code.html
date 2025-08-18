@@ -342,27 +342,36 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<ol style="list-style-type: decimal">
-<li>A study of twins submits each twin to the same test. Twin 1 is just
+<p>A study of twins submits each twin to the same test. Twin 1 is just
 told to complete the test, whilst twin 2 receives extra explanation
 before completing the test. The study then evaluates whether or not the
 explanation helps, i.e., twin 2 performs better than twin 1 in the test.
-The table of the test results is:</li>
-</ol>
+The table of the test results is:</p>
+<pre class="r"><code># Run this code to generate the data
+set.seed(56296)
+myn &lt;- 200
+true.status &lt;- runif(myn)
+e1 &lt;- rnorm(myn, sd = 0.1)
+res.radio &lt;- round(true.status + e1)
+res.comp &lt;- round(true.status + e1 + rnorm(myn, mean = 0.1, sd = 0.2))
+res.comp[res.comp &gt; 1] &lt;- 1
+Twin1 &lt;- factor(res.radio, labels = c(&quot;fail&quot;, &quot;pass&quot;))
+Twin2  &lt;- factor(res.comp , labels = c(&quot;fail&quot;, &quot;pass&quot;))</code></pre>
 <pre class="r"><code>table(Twin1, Twin2)</code></pre>
 <pre><code>##       Twin2
 ## Twin1  fail pass
 ##   fail   66   34
 ##   pass   13   87</code></pre>
-<p>Use a test to decide whether twin 2 performs better than twin 1.</p>
+<ul>
+<li>Use a test to decide whether twin 2 performs better than twin
+1.</li>
+</ul>
 <pre class="r"><code>mcnemar.test(table(Twin1, Twin2))</code></pre>
 <pre><code>## 
-##  McNemar&#39;s Chi-squared test with
-##  continuity correction
+##  McNemar&#39;s Chi-squared test with continuity correction
 ## 
 ## data:  table(Twin1, Twin2)
-## McNemar&#39;s chi-squared = 8.5106, df
-## = 1, p-value = 0.003531</code></pre>
+## McNemar&#39;s chi-squared = 8.5106, df = 1, p-value = 0.003531</code></pre>
 </div>
 <div id="notes" class="section level3">
 <h3>Notes</h3>
@@ -375,7 +384,7 @@ can be found via the link below:</p>
 <div id="exercises" class="section level3">
 <h3>Exercises</h3>
 <ol style="list-style-type: decimal">
-<li>Patients who regular have migraine often also have photophobia. A
+<li>Patients who regularly have migraine often also have photophobia. A
 study was setup to evaluate whether a new treatment helps decrease the
 frequency of photophobia occurence. Patients first answer a
 questionnaire, indicating whether they had at least one migraine with
@@ -385,13 +394,26 @@ completed, they fill in the questionnaire again, indicating whether they
 had at least one migraine with photophobia in the 6 months after
 treatment or not. The observed table is as follows:</li>
 </ol>
+<pre class="r"><code># Run this code to generate the data
+set.seed(53396)
+myn &lt;- 400
+true.status &lt;- runif(myn)
+e1 &lt;- rnorm(myn, sd = 0.1)
+res.radio &lt;- round(true.status + e1)
+res.comp &lt;- round(true.status + e1 + rnorm(myn, mean = 0.05, sd = 0.3))
+res.comp[res.comp &gt; 1] &lt;- 1
+res.comp[res.comp &lt; 0] &lt;- 0
+BeforeTreatment &lt;- factor(res.radio, labels = c(&quot;noPhoto&quot;, &quot;Photo&quot;))
+AfterTreatment  &lt;- factor(res.comp , labels = c(&quot;noPhoto&quot;, &quot;Photo&quot;))</code></pre>
 <pre class="r"><code>table(BeforeTreatment, AfterTreatment)</code></pre>
 <pre><code>##                AfterTreatment
 ## BeforeTreatment noPhoto Photo
 ##         noPhoto     155    58
 ##         Photo        39   148</code></pre>
-<p>Perform a test to decide whether the results after treatment lead to
-more often, or less often, photophobia than before treatment.</p>
+<ul>
+<li>Perform a test to decide whether the results after treatment lead to
+more often, or less often, photophobia than before treatment.</li>
+</ul>
 <ol start="2" style="list-style-type: decimal">
 <li>A case-control study</li>
 </ol>
@@ -401,12 +423,26 @@ cancer or not. To do this, cases of this cancer are included and, per
 case, a matching control is selected, which is similar to its
 corresponding case in all important covariates. The data consists thus
 of pairs of individuals, one being the case and one its matching
-control. Perform a test to decide whether exposure occurs more often in
-one of the groups (case or control).</p>
+control.</p>
+<pre class="r"><code># Run this code to generate the data
+set.seed(53396)
+myn &lt;- 300
+true.status &lt;- rbeta(myn, shape1 = 4, shape2 = 1)
+e1 &lt;- rnorm(myn, sd = 0.1)
+res.case &lt;- round(true.status + e1)
+res.cont &lt;- round(true.status + e1 + rnorm(myn, mean = 0.05, sd = 0.3))
+res.cont[res.cont &gt; 1] &lt;- 1
+Cases &lt;- factor(res.case, labels = c(&quot;noExp&quot;, &quot;Exp&quot;))
+Controls  &lt;- factor(res.cont , labels = c(&quot;noExp&quot;, &quot;Exp&quot;))</code></pre>
+<pre class="r"><code>table(Cases, Controls)</code></pre>
 <pre><code>##        Controls
 ## Cases   noExp Exp
 ##   noExp     9  10
 ##   Exp      36 245</code></pre>
+<ul>
+<li>Perform a test to decide whether exposure occurs more often in one
+of the groups (case or control).</li>
+</ul>
 </div>
 
 

@@ -342,11 +342,17 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<p>Using again the learning speed and sex example of the
+<ul>
+<li>Using again the learning speed and sex example of the
 <code>quine</code> data, compute the sample size required to obtain a
 significant chi-square test if the significance level desired was 0.025,
-instead of 0.05, while keeping all other parameters the same.</p>
-<pre class="r"><code>pwr.chisq.test(w = eff.size, df = 1, power = 0.8, sig.level = 0.025)</code></pre>
+instead of 0.05, while keeping all other parameters the same.</li>
+</ul>
+<pre class="r"><code>library(pwr)
+mytable &lt;- table(quine$Lrn, quine$Sex)
+chisq.stat &lt;- chisq.test(mytable)$stat
+eff.size &lt;- sqrt(chisq.stat/sum(mytable))
+pwr.chisq.test(w = eff.size, df = 1, power = 0.8, sig.level = 0.025)</code></pre>
 <pre><code>## 
 ##      Chi squared power calculation 
 ## 

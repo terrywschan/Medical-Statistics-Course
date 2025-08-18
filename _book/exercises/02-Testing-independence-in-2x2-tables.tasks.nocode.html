@@ -342,29 +342,39 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<ol style="list-style-type: decimal">
-<li><p>Use both the Fisher’s exact test as well as the chi-square test
-to decide if there is evidence of association between learning speed and
+<ul>
+<li>Use both the Fisher’s exact test as well as the chi-square test to
+decide if there is evidence of association between learning speed and
 sex in the <code>quine</code> data. Extract the p-value of each test,
-and add the p-value to the barplot of the data.</p></li>
-<li><p>Now consider two other datasets involving variables
-<code>X</code> and <code>Y</code>, with the cross-tabulations of the
-variables given below - first for study 1:</p></li>
-</ol>
+and add the p-value to the barplot of the data.</li>
+</ul>
+<p>Now consider two other datasets involving variables <code>X</code>
+and <code>Y</code>, with the cross-tabulations of the variables given
+below - first for study 1:</p>
+<pre class="r"><code># Run this code to generate the data
+set.seed(55498)
+n &lt;- 100
+x1 &lt;- rbinom(n, prob = 0.3, size = 1)
+y1 &lt;- rbinom(n, prob = 0.2, size = 1)
+
+x2 &lt;- x1
+y2 &lt;- rbinom(n, prob = 0.8*x2, size = 1)</code></pre>
 <pre class="r"><code>table(x1, y1)</code></pre>
 <pre><code>##    y1
 ## x1   0  1
 ##   0 53 11
 ##   1 27  9</code></pre>
-<p>Now for study 2:</p>
+<p>And for study 2:</p>
 <pre class="r"><code>table(x2, y2)</code></pre>
 <pre><code>##    y2
 ## x2   0  1
 ##   0 64  0
 ##   1  7 29</code></pre>
-<p>Try to use both the chi-square test and Fisher’s exact test to
+<ul>
+<li>Try to use both the chi-square test and Fisher’s exact test to
 investigate whether or not the data supports the null hypothesis of
-independence between <code>X</code> and <code>Y</code>.</p>
+independence between <code>X</code> and <code>Y</code>.</li>
+</ul>
 </div>
 
 

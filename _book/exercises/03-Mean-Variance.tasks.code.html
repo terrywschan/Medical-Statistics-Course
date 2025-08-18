@@ -342,21 +342,18 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<p>Let us go back to the <code>decathlon2</code> dataset and compute the
-mean, and the standard deviation.</p>
+<ul>
+<li>Let us go back to the <code>decathlon2</code> dataset and compute
+the mean, and the standard deviation.</li>
+</ul>
 <pre class="r"><code>names(decathlon2)</code></pre>
-<pre><code>##  [1] &quot;X100m&quot;        &quot;Long.jump&quot;   
-##  [3] &quot;Shot.put&quot;     &quot;High.jump&quot;   
-##  [5] &quot;X400m&quot;        &quot;X110m.hurdle&quot;
-##  [7] &quot;Discus&quot;       &quot;Pole.vault&quot;  
-##  [9] &quot;Javeline&quot;     &quot;X1500m&quot;      
-## [11] &quot;Rank&quot;         &quot;Points&quot;      
+<pre><code>##  [1] &quot;X100m&quot;        &quot;Long.jump&quot;    &quot;Shot.put&quot;     &quot;High.jump&quot;   
+##  [5] &quot;X400m&quot;        &quot;X110m.hurdle&quot; &quot;Discus&quot;       &quot;Pole.vault&quot;  
+##  [9] &quot;Javeline&quot;     &quot;X1500m&quot;       &quot;Rank&quot;         &quot;Points&quot;      
 ## [13] &quot;Competition&quot;</code></pre>
 <pre class="r"><code>sapply(1:ncol(decathlon2), function(x){class(decathlon2[,x])})</code></pre>
-<pre><code>##  [1] &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot;
-##  [4] &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot;
-##  [7] &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot;
-## [10] &quot;numeric&quot; &quot;integer&quot; &quot;integer&quot;
+<pre><code>##  [1] &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot;
+##  [7] &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;integer&quot; &quot;integer&quot;
 ## [13] &quot;factor&quot;</code></pre>
 <pre class="r"><code>data.Decastar &lt;- decathlon2[decathlon2$Competition == &#39;Decastar&#39;, c(1:10,12)]
 data.OlympicGames &lt;- decathlon2[decathlon2$Competition == &#39;OlympicG&#39;, c(1:10,12)]
@@ -364,8 +361,10 @@ mean.variables.Decastar &lt;- apply(data.Decastar, 2, mean, na.rm=T)
 mean.variables.OlympicGames &lt;- apply(data.OlympicGames, 2, mean, na.rm=T)
 sd.variables.Decastar &lt;- apply(data.Decastar, 2, sd, na.rm=T)
 sd.variables.OlympicGames &lt;- apply(data.OlympicGames, 2, sd, na.rm=T)</code></pre>
-<p>Now compute the median, and the median absolute deviation for each
-event and the total number of points for each competition.</p>
+<ul>
+<li>Now compute the median, and the median absolute deviation for each
+event and the total number of points for each competition.</li>
+</ul>
 <pre class="r"><code>data.Decastar &lt;- decathlon2[decathlon2$Competition == &#39;Decastar&#39;, c(1:10,12)]
 data.OlympicGames &lt;- decathlon2[decathlon2$Competition == &#39;OlympicG&#39;, c(1:10,12)]
 median.variables.Decastar &lt;- apply(data.Decastar, 2, median, na.rm=T)

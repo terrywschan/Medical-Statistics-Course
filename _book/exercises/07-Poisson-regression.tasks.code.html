@@ -342,12 +342,13 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<p>Using regression models, recompute the relative risk and odds ratio
-of having colon cancer, amongst individuals with high BMI relative to
-individuals with normal or low BMI. Note: before you have computed
-relative risk and odds ratio using the counts table. For this task, you
-need the data consisting of the variables recording one value per
-individual, which can be found in file
+<ul>
+<li><p>Using regression models, recompute the relative risk and odds
+ratio of having colon cancer, amongst individuals with high BMI relative
+to individuals with normal or low BMI.</p>
+<p>Note: before you have computed relative risk and odds ratio using the
+counts table. For this task, you need the data consisting of the
+variables recording one value per individual, which can be found in file
 <code>data_colon_RR_OR.txt</code>. Add the computed values to the text
 below. Also test the null hypothesis that the relative risk is equal to
 1, as well as the null hypothesis that the odds ratio is equal to 1, in
@@ -355,27 +356,28 @@ both cases using a confidence level of 99%. Compare the relative risk
 and odds ratio estimates you found with those computed using the tables
 in previous exercises. What do you conclude about the risks and the odds
 of colon cancer, amongst individuals with high BMI compared with those
-with normal or low BMI?</p>
+with normal or low BMI?</p></li>
+</ul>
 <pre class="r"><code>data.colon &lt;- read.delim(&quot;data_colon_RR_OR.txt&quot;)</code></pre>
-<pre class="r"><code>lgfit &lt;- glm(colon.cancer ~ bmi, family = binomial)
+<pre class="r"><code>lgfit &lt;- glm(colon.cancer ~ bmi, data = data.colon, family = binomial)
 log.or &lt;- summary(lgfit)$coef[2, 1]
 or &lt;- exp(log.or)
 confint(lgfit, 2, level = 0.99)</code></pre>
 <pre><code>## Attente de la réalisation du profilage...</code></pre>
-<pre><code>##    0.5 %   99.5 % 
-## 1.047588 2.011358</code></pre>
-<pre class="r"><code>pfit &lt;- glm(colon.cancer ~ bmi, family = poisson)
+<pre><code>##     0.5 %    99.5 % 
+## -2.011358 -1.047588</code></pre>
+<pre class="r"><code>pfit &lt;- glm(colon.cancer ~ bmi, data = data.colon, family = poisson)
 log.rr &lt;- summary(pfit)$coef[2, 1]
 confint(pfit, 2, level = 0.99)</code></pre>
 <pre><code>## Attente de la réalisation du profilage...</code></pre>
-<pre><code>##     0.5 %    99.5 % 
-## 0.5021761 1.2472776</code></pre>
+<pre><code>##      0.5 %     99.5 % 
+## -1.2472776 -0.5021761</code></pre>
 <pre class="r"><code>rr &lt;- exp(log.rr)</code></pre>
 <p>Using data from the colon cancer study, we found that the relative
 risk of developing colon cancer, amongst individuals with high BMI
-compared to those with normal or low BMI, was 2.37. For the same data,
+compared to those with normal or low BMI, was 0.42. For the same data,
 the odds ratio of colon cancer, amongst individuals with high BMI
-compared to those with normal or low BMI, was 4.58.</p>
+compared to those with normal or low BMI, was 0.22.</p>
 </div>
 
 

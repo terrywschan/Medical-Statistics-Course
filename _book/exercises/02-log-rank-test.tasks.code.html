@@ -342,15 +342,15 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<ol style="list-style-type: decimal">
-<li>Consider again the leukemia data in dataset <code>leuk</code>. We
+<p>Consider again the leukemia data in dataset <code>leuk</code>. We
 will now compare survival probabilities between the groups given by
 <code>ag</code>, representing the test result for the presence of Auer
-rods and/or significant granulation of leukaemic cells.</li>
-</ol>
-<p>Plot the Kaplan-Meier survival curves separately per group defined by
-the AG test. Compute the log-rank test to compare the two survival
-distributions between the two groups.</p>
+rods and/or significant granulation of leukaemic cells.</p>
+<ul>
+<li>Plot the Kaplan-Meier survival curves separately per group defined
+by the AG test. Compute the log-rank test to compare the two survival
+distributions between the two groups.</li>
+</ul>
 <pre class="r"><code># Create the Surv object
 leuk.surv &lt;- Surv(leuk$time) # no event variable as all patients experience the event (death)
 # Define the comparison to be made
@@ -365,12 +365,9 @@ survdiff(leuk.surv ~ leuk$ag)</code></pre>
 <pre><code>## Call:
 ## survdiff(formula = leuk.surv ~ leuk$ag)
 ## 
-##                  N Observed Expected
-## leuk$ag=absent  16       16      9.3
-## leuk$ag=present 17       17     23.7
-##                 (O-E)^2/E (O-E)^2/V
-## leuk$ag=absent       4.83      8.45
-## leuk$ag=present      1.90      8.45
+##                  N Observed Expected (O-E)^2/E (O-E)^2/V
+## leuk$ag=absent  16       16      9.3      4.83      8.45
+## leuk$ag=present 17       17     23.7      1.90      8.45
 ## 
 ##  Chisq= 8.4  on 1 degrees of freedom, p= 0.004</code></pre>
 <pre class="r"><code>sdif &lt;- survdiff(leuk.surv ~ leuk$ag)$chisq

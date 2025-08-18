@@ -342,43 +342,47 @@ display: none;
 
 <div id="quick-tasks" class="section level3">
 <h3>Quick tasks</h3>
-<ol style="list-style-type: decimal">
-<li><p>Make Kaplan-Meier curves to the Melanoma data using the same
-<code>Surv</code> object defined above, i.e. with both censoring
-categories combined into a single one. Do this both for the entire data
-together, as well as for the observations according to gender. Compute
-the log-rank test to check whether there is evidence that the two
-survival probability curves are different.</p></li>
-<li><p>Let us consider again the <code>leuk</code> example with overall
-survival data of leukemia cases, of the package
-<code>MASS</code>.</p></li>
-</ol>
+<p>Consider the <code>Melanoma</code> data set.</p>
+<ul>
+<li><p>Make Kaplan-Meier curves using the same <code>Surv</code> object
+defined above, i.e. with both censoring categories combined into a
+single one. Do this both for the entire data together, as well as for
+the observations according to gender.</p></li>
+<li><p>Compute the log-rank test to check whether there is evidence that
+the two survival probability curves are different.</p></li>
+</ul>
+<p>Let us consider again the <code>leuk</code> example with overall
+survival data of leukemia cases, of the package <code>MASS</code>.</p>
 <p>We define again the response as a function of <code>time</code> only,
 since all patients experience an event (death). Subsequently, we fit a
 survival regression of the survival response as a function of
 <code>ag</code> and of white blood cell count <code>wbc</code>. We will
 use Cox regression for this.</p>
-<p>First, let us examine the nature of the relationship between
+<ul>
+<li><p>First, let us examine the nature of the relationship between
 <code>time</code> and the covariates <code>ag</code> and
-<code>wbc</code>. For this, we make a graph. We use <code>time</code> on
-the log-scale, as this is equivalent to what happens in the regression
-model:</p>
-<p>The covariate <code>wbc</code> has many small values and only a few
-large ones. This is characteristic of a variable on an exponential
-scale. So we take its logarithm and produce the plot again:</p>
+<code>wbc</code>. For this, we <code>log(time)</code> against each
+covariate. We are plotting <code>time</code> on the log-scale, as this
+is equivalent to what happens in the regression model.</p></li>
+<li><p>The covariate <code>wbc</code> has many small values and only a
+few large ones. This is characteristic of a variable on an exponential
+scale. So let’s take its logarithm and make the plot again.</p>
 <p>This relationship seems to be closer to linear. So, we will include
-<code>wbc</code> in the model with a log-transformation.</p>
-<p>A Cox regression is fitted via the function <code>coxph</code> which,
-as regression functions <code>lm</code> and <code>glm</code>, expect a
-formula as input. The formula relates the <code>Surv</code> response to
-the covariates, in this case <code>ag</code> and
-<code>log(wbc)</code>:</p>
-<ol start="3" style="list-style-type: decimal">
-<li>Consider again the Melanoma data, and now define <code>sex</code> as
-1 for females and 0 for males. Fit the Cox regression model again and
-compare results with those when <code>sex</code> was used with the
-original coding.</li>
-</ol>
+<code>wbc</code> in the model with a log-transformation.</p></li>
+<li><p>Now let’s perform a Cox regression using the function
+<code>coxph()</code>.</p>
+<p>The <code>coxph()</code> function, like the regression functions
+<code>lm</code> and <code>glm</code>, expect a formula as input. The
+formula uses a <code>Surv</code> object as response on the left hand
+side, and the covariates on the right hand side (in this case
+<code>ag</code> and <code>log(wbc)</code>).</p></li>
+</ul>
+<p>Consider again the Melanoma data, and now define <code>sex</code> as
+1 for females and 0 for males.</p>
+<ul>
+<li>Fit the Cox regression model again and compare results with those
+when <code>sex</code> was used with the original coding.</li>
+</ul>
 </div>
 
 
