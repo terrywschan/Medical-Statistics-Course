@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks
 
-Compute the correlation matrix between the events (first ten variables) of the decathlon in the dataset `decathlon2` using the Pearson correlation, the Spearman's rank correlation and Kendall's tau. Display the results on heatmaps.
+- Compute the correlation matrix between the events (first ten variables) of the decathlon in the dataset `decathlon2` using the Pearson correlation, the Spearman's rank correlation and Kendall's tau. Display the results on heatmaps.
 
 ```{r}
 library(gplots)

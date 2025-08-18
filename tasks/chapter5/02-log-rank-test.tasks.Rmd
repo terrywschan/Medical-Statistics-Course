@@ -9,9 +9,9 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks
 
-1. Consider again the leukemia data in dataset `leuk`. We will now compare survival probabilities between the groups given by `ag`, representing the test result for the presence of Auer rods and/or significant granulation of leukaemic cells.
+Consider again the leukemia data in dataset `leuk`. We will now compare survival probabilities between the groups given by `ag`, representing the test result for the presence of Auer rods and/or significant granulation of leukaemic cells.
 
-Plot the Kaplan-Meier survival curves separately per group defined by the AG test. Compute the log-rank test to compare the two survival distributions between the two groups.
+- Plot the Kaplan-Meier survival curves separately per group defined by the AG test. Compute the log-rank test to compare the two survival distributions between the two groups.
 
 ```{r}
 # Create the Surv object

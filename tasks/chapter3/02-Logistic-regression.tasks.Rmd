@@ -9,20 +9,157 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks 
 
-1. The `esoph` data includes counts of a case-control study of esophageal cancer, according to age (`agegp`), alcohol consumption (`alcgp`) and tobacco consumption (`tobgp`). Fit a logistic regression model to the responses, formed by both case and control counts, using all covariates available. Print a summary of the model fit, and also the ANOVA table.
+The `esoph` data includes counts of a case-control study of esophageal cancer, according to age (`agegp`), alcohol consumption (`alcgp`) and tobacco consumption (`tobgp`).
 
-```{r, echo = FALSE, eval = FALSE}
+- Fit a logistic regression model to the responses, formed by both case and control counts, using all covariates available. Print a summary of the model fit, and also the ANOVA table.
+
+```{r eval=TRUE, include=param}
 myresp <- cbind(esoph$ncases, esoph$ncontrols)
 eso.logit <- glm(myresp ~ esoph$agegp + esoph$alcgp + esoph$tobgp, family = binomial)
 summary(eso.logit)
 anova(eso.logit)
 ```
 
-2. Fit also a model which includes also an interaction effect between alcohol and tobacco consumption. Print again the model summary and the anova table of the model fit.
+- (*) You noticed that the factors alcohol and tobacco consumption appear in the model in a strange way. Why do you think this is?
 
-```{r, echo = FALSE, eval = FALSE}
+```{r results='asis', echo=FALSE}
+knitr::asis_output(
+"The factors `alcgp` and `tobgp` of the esoph` dataset have ordered levels:"
+)
+```
+
+```{r}
+head(esoph$tobgp)
+class(esoph$tobgp)
+```
+
+```{r results='asis', echo=FALSE}
+knitr::asis_output(
+'In general, a factor is a grouping variable. For example, a factor `sex` with values `male` and `female` means that the variable `sex` can assume these two values, and these two values only, in the dataset. Internally, the variable can be coded as `1` and `2`, but when the value changes from 1 to 2 this does not mean "adding one unit to the variable", but rather changing categories. Another example of a factor could be `cancerType`, say breast, colon and kidney for a certain study. Again, any change in the value of `cancerType` is a change in category, and a change from breast to colon can be completely different (and have a different direction) as a change from breast to kidney, say. 
+
+Ordered factors are those for which the levels have an intrinsic order. Alcohol consumption in the `esoph` data is such a factor: the levels represent increasing consumption levels. Because of this intrinsic order, some functions of the factor levels are of particular interest, and these are used in the model fit, instead of the individual factor levels. These functions are polynomial combinations of the factor levels representing trends: linear, quadratic, cubic, of 4th and 5th degree. Essentially, a linear trend assumes that the log-odds ratio increases (or decreases) by the same amount as the alcohol consumption increases from one level to the next. A quadratic trend adds to the linear trend a quadratic term, and so on. Below we illustrate the linear, quadratic and cubic trends for `tobgp`.
+
+The ordered factor levels are first transformed into linear, quadratic and cubic terms using the corresponding basis polynomials (orthonormal polynomials):'
+)
+```
+
+```{r fig.width=5, fig.height=5, fig.show="hold", out.width="33%", echo=FALSE}
+x <- 1:nlevels(esoph$tobgp) - 1
+contr <- contr.poly(length(x))
+ax <- seq(from = 1, to = nlevels(esoph$tobgp), by = 0.1) - 1
+acontr <- apply(contr, 2, function(y) predict(lm(y ~ poly(x, nlevels(esoph$tobgp)-1)), list(x=ax)))
+
+plot(ax, acontr[,1], type = "l", col = "blue",
+     main = "Linear basis (L)",
+     xlab = "Levels", xaxt = "n",
+     ylab = "", ylim = c(-1, 1))
+abline(h = 0, lty = 2)
+points(x, contr[,1], pch = 20, col = "blue")
+axis(1, at = x, labels = x)
+text(0, 1, adj = c(0, 1), col = "blue",
+     sprintf("y = L(x)"))
+
+plot(ax, acontr[,2], type = "l", col = "red2",
+     main = "Quadratic basis (Q)",
+     xlab = "Levels", xaxt="n",
+     ylab = "", ylim = c(-1, 1))
+abline(h = 0, lty = 2)
+points(x, contr[,2], pch = 20, col = "red2")
+axis(1, at = x, labels = x)
+text(0, 1, adj = c(0, 1), col = "red2",
+     sprintf("y = Q(x)"))
+
+plot(ax, acontr[,3], type = "l", col = "darkgreen",
+     main="Cubic basis (C)",
+     xlab="Levels", xaxt="n",
+     ylab = "", ylim=c(-1, 1))
+abline(h = 0, lty = 2)
+points(x, contr[,3], pch = 20, col = "darkgreen")
+axis(1, at = x, labels = x)
+text(0, 1, adj = c(0, 1), col = "darkgreen",
+     sprintf("y = C(x)"))
+```
+
+```{r results='asis', echo=FALSE}
+knitr::asis_output(
+'Multiplying each basis by the corresponding fitted coefficient gives the corresponding fitted trend:'
+)
+```
+
+```{r fig.width=5, fig.height=5, fig.show="hold", out.width="33%", echo=FALSE}
+mycoef <- coef(eso.logit)[grep("tobgp", names(coef(eso.logit)))]
+ylim <- c(-1,1) * max(abs(sapply(1:length(mycoef), function(i) mycoef[i]*contr[,i])),
+                      abs(rowSums(sapply(1:length(mycoef), function(i) mycoef[i]*contr[,i]))))
+
+plot(ax, mycoef[1]*acontr[,1], type = "l", col = "blue",
+     main = "Linear trend (`tobgp.L`)",
+     xlab = "tobgp", xaxt = "n",
+     ylab = "Odd ratio (linear component)", ylim = ylim)
+abline(h = 0, lty = 2)
+points(x, mycoef[1]*contr[,1], pch = 20, col = "blue")
+axis(1, at = x, labels = levels(esoph$tobgp))
+text(0, ylim[2], adj = c(0, 1), col = "blue",
+     sprintf("y = %.3f*L(x)", mycoef[1]))
+
+plot(ax, mycoef[2]*acontr[,2], type = "l", col = "red2",
+     main = "Quadratic trend (`tobgp.Q`)",
+     xlab = "tobgp", xaxt="n",
+     ylab = "Odd ratio (quadratic component)", ylim = ylim)
+abline(h = 0, lty = 2)
+points(x, mycoef[2]*contr[,2], pch = 20, col = "red2")
+axis(1, at = x, labels = levels(esoph$tobgp))
+text(0, ylim[2], adj = c(0, 1), col = "red2",
+     sprintf("y = %.3f*Q(x)", mycoef[2]))
+
+plot(ax, mycoef[3]*acontr[,3], type = "l", col = "darkgreen",
+     main="Cubic trend (`tobgp.C`)",
+     xlab="tobgp", xaxt="n",
+     ylab = "Odd ratio (cubic component)", ylim=ylim)
+abline(h = 0, lty = 2)
+points(x, mycoef[3]*contr[,3], pch = 20, col = "darkgreen")
+axis(1, at = x, labels = levels(esoph$tobgp))
+text(0, ylim[2], adj = c(0, 1), col = "darkgreen",
+     sprintf("y = %.3f*C(x)", mycoef[3]))
+
+plot(ax, rowSums(sapply(1:length(mycoef), function(i) mycoef[i]*acontr[,i])), 
+     type = "l", col = "black", lwd=2,
+     main = "All trends combined",
+     xlab = "tobgp", xaxt = "n",
+     ylab = "Odd ratio (overall)", ylim = ylim)
+abline(h = 0, lty = 2)
+points(x, rowSums(sapply(1:length(mycoef), function(i) mycoef[i]*contr[,i])), 
+       pch = 20, col = "black", cex=1.5)
+axis(1, at = x, labels = levels(esoph$tobgp))
+text(0, ylim[2], adj = c(0, 1), col = "black",
+     sprintf("y = %.3f*C(x) + %.3f*Q(x) + %.3f*L(x)", mycoef[3], mycoef[2], mycoef[1]))
+```
+
+- Fit also a model which includes also an interaction effect between alcohol and tobacco consumption. Print again the model summary and the anova table of the model fit.
+
+    Note: In terms of formula syntax, the model with only the main effects of alcohol and tobacco use can be stated as `~ alcgp + tobgp`. To add to this model an interaction effect, we can either add the interaction term on its own by using the `:` operator, as in `~ alcgp + tobgp + alcgp:tobgp`, or else use the `*` to add at once main effects and interaction, as in `~ alcgp * tobgp`.
+
+```{r}
 myresp <- cbind(esoph$ncases, esoph$ncontrols)
 eso.logit.i <- glm(myresp ~ esoph$agegp + esoph$alcgp * esoph$tobgp, family = binomial)
 summary(eso.logit.i)
 anova(eso.logit.i)
+```
+
+- (*) How would you interpret such an interaction effect?
+
+```{r results='asis', echo=FALSE}
+knitr::asis_output(
+"An interaction effect between two factors allows the model to fit different effects to cases with different combinations of these factors. In the example above, it is asked to include an interaction between alcohol consumption and tobacco consumption, both coded into 4 categories representing increasing consumption levels:"
+)
+```
+
+```{r}
+table(esoph$alcgp)
+table(esoph$tobgp)
+```
+
+```{r results='asis', echo=FALSE}
+knitr::asis_output(
+"The main effect of alcohol consumption measures how the odds ratio of esophageal cancer changes depending on alcohol use. Similarly, the main effect of tobacco consumption measures how the odds ratio of esophageal cancer changes depending on tobacco use. Under a model with the main effects of these covariates, if someone has alcohol consumption of 40--79 gm/day and tobacco of 10--19 gm/day, the effect on their log-odds ratio is computed by adding the effects of alcohol consumption of 40--79 gm/day, to those of tobacco of 10--19 gm/day. The interaction between alcohol and tobacco consumption then allows for a departure of this: it means that for example by consuming both alcohol and tobacco, the log-odds ratio increases more than the use of only alcohol or only tobacco."
+)
 ```

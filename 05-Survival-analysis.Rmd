@@ -37,21 +37,25 @@ mydata
 
 The data can be visualized in the following way:
 
-```{r}
-#mydata <- rbind(migraine[1:5, ], migraine[(ss/2+1):(ss/2+5), ])
-myxlim <- c(0, max(mydata$time))
-mypch <- rep(4, nrow(mydata))
-mypch[ mydata$event == 0 ] <- 1
-plot(1, 1, xlim = myxlim, ylim = c(0.5, nrow(mydata)+1), col = "white",
-     main = "Data for 10 participants", xlab = "time to event (minutes)", ylab = "participant")
-mcol <- rep(c("blue", "darkgreen"), each = nrow(mydata)/2)
-for(xi in 1:nrow(mydata)) segments(0, xi, mydata$time[xi], xi,  col = mcol[xi], lwd = 2)
-for(xi in 1:nrow(mydata)) points(mydata$time[xi], xi, col = mcol[xi], pch = mypch[ xi ])
-legend("topright", legend = c("D1", "D2"), lty = "solid", lwd = 2, 
-       col = c("blue", "darkgreen") )
+```{r echo=FALSE}
+mycol <- c(D1="blue", D2="darkgreen")
+plot(NULL,
+     xlim = c(0, max(mydata$time)+10), ylim = c(0.5, nrow(mydata)+1),
+     main = "Data for 10 participants",
+     xlab = "time to event (minutes)", ylab = "participant")
+segments(0, 1:nrow(mydata), mydata$time, 1:nrow(mydata),
+         lwd = 2, col = mycol[mydata$drug])
+segments(mydata$time, 1:nrow(mydata), mydata$time+5, 1:nrow(mydata),
+         lwd = 2, lty = 2, col = ifelse(mydata$event, "#00000000", "grey"))
+points(mydata$time, 1:nrow(mydata),
+       pch=ifelse(mydata$event, 4, 1), col=mycol[mydata$drug])
+points(mydata$time+6, 1:nrow(mydata),
+       pch=ifelse(mydata$event, "", "?"), col="grey")
+legend("topright", legend = c(names(mycol), "Event", "Censored"), 
+       lwd = c(2, 2, NA, NA), col = c(mycol, "black", "black"), pch=c(NA, NA, 4, 1))
 ```
 
-In the graph, the time point 0 represents the moment the participant took the drug for that migraine event, and the horizontal line indicates the period during which the participant's migraine is known to have persisted. The right-hand point where the line ends includes a symbol representing the event observed: `x` indicates a recovery event, and `o` indicates a `fail` event. 
+In the graph, the time point 0 represents the moment the participant took the drug for that migraine event, and the horizontal line indicates the period during which the participant's migraine is known to have persisted. The right-hand point where the line ends includes a symbol representing the event observed: `x` indicates a recovery event, and `o` indicates censoring (no event before experiment ends). 
 
 ### Kaplan-Meier curve
 
@@ -540,7 +544,7 @@ We have just seen an introduction to survival data analysis. It is good to be aw
 
 In our examples here we have had censored observations. These were observations from which we knew the starting points, but not the time to event - only that the event did not happen until a certain time point. Recall the graoh:
 
-```{r}
+```{r echo=FALSE}
 set.seed(39562) # (493756)
 ss <- 400
 fdrug <- factor(rep(1:2, each = ss/2), labels = c("D1", "D2"))
@@ -548,37 +552,52 @@ event <- c(rbinom(ss/2, 1, prob = .7), rbinom(ss/2, 1, prob = .75))
 tte <- round(rgamma(ss, shape = 30, rate = 1+event/4))
 migraine <- data.frame(event, time = tte, drug = fdrug)
 mydata <- rbind(migraine[1:5, ], migraine[(ss/2+1):(ss/2+5), ])
-myxlim <- c(0, max(mydata$time))
-mypch <- rep(4, nrow(mydata))
-mypch[ mydata$event == 0 ] <- 1
-plot(1, 1, xlim = myxlim, ylim = c(0.5, nrow(mydata)+1), col = "white",
-     main = "Data for 10 participants", xlab = "time to event (minutes)", 
-     ylab = "participant")
-mcol <- rep(c("blue", "darkgreen"), each = nrow(mydata)/2)
-for(xi in 1:nrow(mydata)){ 
-  segments(0, xi, mydata$time[xi], xi,  col = mcol[xi], 
-           lwd = 2)}
-for(xi in 1:nrow(mydata)){
-  points(mydata$time[xi], xi, col = mcol[xi], pch = mypch[ xi ])
-  }
-legend("topright", legend = c("D1", "D2"), lty = "solid", lwd = 2,
-       col = c("blue", "darkgreen") )
- 
+
+mycol <- c(D1="blue", D2="darkgreen")
+plot(NULL,
+     xlim = c(0, max(mydata$time)+10), ylim = c(0.5, nrow(mydata)+1),
+     main = "Data for 10 participants",
+     xlab = "time to event (minutes)", ylab = "participant")
+segments(0, 1:nrow(mydata), mydata$time, 1:nrow(mydata),
+         lwd = 2, col = mycol[mydata$drug])
+segments(mydata$time, 1:nrow(mydata), mydata$time+5, 1:nrow(mydata),
+         lwd = 2, lty = 2, col = ifelse(mydata$event, "#00000000", "grey"))
+points(mydata$time, 1:nrow(mydata),
+       pch=ifelse(mydata$event, 4, 1), col=mycol[mydata$drug])
+points(mydata$time+6, 1:nrow(mydata),
+       pch=ifelse(mydata$event, "", "?"), col="grey")
+legend("topright", legend = c(names(mycol), "Event", "Censored"), 
+       lwd = c(2, 2, NA, NA), col = c(mycol, "black", "black"), pch=c(NA, NA, 4, 1))
 ```
 
 This type of censoring is referred to as *right-censoring*, because in the graph the right-hand side of the follow-up is incomplete.
 
 In other cases, the starting time is unknown. This can be the case when the patient enters the study some time after disease onset, and the exact date of disease onset is unknown. This type of censoring is referred to as *left-censoring*, because in the graph the left-hand side of the follow-up would be incomplete.
-Of course, there are studies where both types of censoring occur. 
+Of course, there are studies where both types of censoring occur, in which case the type of censoring is called *interval-censoring*.
 
-In R, `Surv` can be defined for left-, right- and interval censoring. Typically Cox regression can be used to analyse data with these different censoring types, so long as the censoring is independent of the event probabilities.
-However, the Kaplan-Meier method cannot be used directly with left-censored data.
+In R, a `Surv` object can encode data with left-, right- or interval-censoring.
+But the Cox regression and the Kaplan-Meier estimator *cannot* be used to analyse data left- or interval-censoring.
+Alternative models are required for this type of data, but we will not cover them in this course.
 
-### Type I and type II censoring
+### Left-truncation (delayed entry)
 
-Most progression studies record time to event, and censoring then occurs when either the study is completed before an individual has had an event, or else the individual has been lost to follow-up due to a reason unrelated to the event. In such cases, this is referred to as *type I* censoring. Kaplan-Meier and Cox regression can be used to analyse such data, as we have seen.
+A concept similar to but different than left-censoring is *left-truncation* (a.k.a delayed entry).
+When an individual is included in a study only after a certain time has passed after their initial event, the data is left-truncated.
+Left-truncation occurs even if the time of the initial event is known.
+For example, a patient was diagnosed with cancer at a certain time, but only entered a study after surviving for 5 years.
+The data for this patient is then left-truncated, even if the time of cancer diagnosis is known.
+This is important because individuals can **only be included in the study if they have survived beyond the time of entry**.
+In other words, the data is **conditionally included** based on survival up to the time of observation.
 
-In some cases, a trial is stopped after a certain number of events is reached. As individuals who did not experience an event before the end of the trial are censored, these may correspond to those with longer time-to-event observations. So, the censoring process and the event probability are not independent. This is referred to as *type II* censoring. To analyse data from such studies other models are required than the ones seen here.
+While left-censoring or interval-censoring are relatively uncommon in biomedical research,
+left-truncation is a lot more common, especially in epidemiology.
+Fortunately, unlike left-censoring, both the Cox regression and the Kaplan-Meier estimator *can* be used to analyse left-truncated data.
+
+### Type-I and type-II censoring
+
+Most progression studies record time to event, and censoring then occurs when either the study is completed before an individual has had an event, or else the individual has been lost to follow-up due to a reason unrelated to the event. In such cases, this is referred to as *type-I* censoring. Kaplan-Meier and Cox regression can be used to analyse such data, as we have seen.
+
+In some cases, a trial is stopped after a certain number of events is reached. As individuals who did not experience an event before the end of the trial are censored, these may correspond to those with longer time-to-event observations. So, the censoring process and the event probability are not independent. This is referred to as *type-II* censoring. To analyse data from such studies other models are required than the ones seen here.
 
 ### Competing risks
 

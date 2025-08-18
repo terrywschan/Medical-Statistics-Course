@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks
 
-Let us go back to the `decathlon2` dataset. Use both histograms and boxplots to represent the distribution of the variable `Points` overall and by competitions.
+- Let us go back to the `decathlon2` dataset. Use both histograms and boxplots to represent the distribution of the variable `Points` overall and by competitions.
 
 ```{r}
 library(factoextra)

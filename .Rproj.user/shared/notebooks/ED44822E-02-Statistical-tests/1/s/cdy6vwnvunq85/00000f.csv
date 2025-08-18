@@ -1,3 +1,0 @@
-"0","#Boxplots for variable X and Y"
-"0","par(mfrow=c(1,2))"
-"0","boxplot(dataset$VariableX ~ dataset$group, col = 'blue')"

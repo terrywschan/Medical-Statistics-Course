@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = param, eval= param, include=T)
 
 ### Quick tasks
 
-Let us now consider the `quine` data again. Use both the F test as well as the Kruskal-Wallis test to decide if the number of days of absence differs between age groups. 
+- Let us now consider the `quine` data again. Use both the F test as well as the Kruskal-Wallis test to decide if the number of days of absence differs between age groups. 
 
 ```{r}
 library(MASS)

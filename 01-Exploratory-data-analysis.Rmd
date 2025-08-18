@@ -19,7 +19,7 @@ Discrete random variables are those taking only integer values. Common distribut
 
 The **discrete uniform distribution** assigns the exact same probability to a finite set of values. A common example is throwing a fair dice. After throwing the dice, each number 1, 2, 3, .., 6 has the same probability to be obtained, equal to 1/6. 
 
-```{r}
+```{r echo=FALSE}
 #plotting probability discrete uniform distribution
 
 x <- c(1:6)
@@ -34,7 +34,7 @@ Consider another example, where you flip a coin: heads is registered as 1, and t
 
 You could also have a variable that can yield  many possible values, which is transformed to yield only 1. For example, let us throw a fair dice and check if the number is equal to or lower than 2. The probability of a success (obtaining a value below or equal 2) corresponds to the dice returning 1 or 2, so is equal to 1/3. Therefore, the probability of throwing a number larger than 2 is 2/3 (corresponding to values 3, 4, 5, 6). The analysis of the association between covariates and the probability of success is often done via logistic regression.
 
-```{r}
+```{r echo=FALSE}
 #plotting probability Bernoulli distribution
 
 x <- c(0:1)
@@ -47,9 +47,9 @@ points(x,y,pch=16,cex=2,col="blue")
 
 Now imagine that you throw a fair coin not once, but 10 times. Then the number of times that the result was heads can be modeled by the **binomial distribution**. It describes the probabilities of results of several independent throws, each of which with the same probability of success (heads).  
 
-If we go back to the previous dice example, we can compute the probability to obtain 4 successes (dice gives 1 or 2) in 10 trials. This can be done with the function `dbinom`. The probability is `r dbinom(4, size = 10, p= 1/3)`.
+If we go back to the previous dice example, we can compute the probability to obtain 4 successes (dice gives 1 or 2) in 10 trials. This can be done with the function `dbinom`. The probability can be calculated by using `dbinom(4, size = 10, p= 1/3)`, resulting in `r dbinom(4, size = 10, p= 1/3)`.
 
-```{r}
+```{r echo=FALSE}
 #plotting probability binomial distribution
 
 x <- c(0:10)
@@ -66,19 +66,19 @@ A continuous random variable can have an infinite number of possible values. The
 
 The **continuous uniform distribution** has a similar definition to the discrete uniform distribution. The probability density function yields the same value across the range of possible values. To illustrate this, let us plot the density of a continuous uniform distribution between 0 and 1.
 
-```{r}
+```{r echo=FALSE}
 
 #Plot the density
-curve(dunif(x, min= 0, max= 1), col="blue", from = 0, to = 1 )
+curve(dunif(x, min= 0, max= 1), col="blue", from = 0, to = 1, ylab="Uniform density")
 
 ```
 
 **Quartiles** are values that leave probability of 1/4, 2/4 (or 1/2) and 3/4 below them. Let us add the quartiles of the uniform distribution to the plot.
 
-```{r}
+```{r echo=FALSE}
 
 #Plot the density and quartiles
-curve(dunif(x, min= 0, max= 1), col="blue", from = 0, to = 1 )
+curve(dunif(x, min= 0, max= 1), col="blue", from = 0, to = 1, ylab="Uniform density")
 abline(v = qunif(c(0.25, 0.5, 0.75), min= 0, max= 1), col= 'darkred')
 
 ```
@@ -95,7 +95,7 @@ Then we can take the first quartile as 3, since it has observations 1, 2, 3 up t
 
 In general, for a continuous variable, the probability to observe a value between 2 given values is equal to the area under the probability density function between these two points. The generalization of the quartiles for any probability is called **quantile**: the 5%-quantile is the value that leaves 5% (or 0.05) of probability below it. Similarly, the 95%-quantile is the value that leaves 95% (or 0.95) of probability below it. Below we illustrate these with the probability density function for the uniform between 0 and 1.
 
-```{r}
+```{r echo=FALSE}
 
 #Plot of the density and important quantiles 
 #of a continuous uniform distribution
@@ -127,10 +127,10 @@ the 10% quantile is 1 (or any number larger than 1 but smaller than 2), and the 
 The most common distribution encountered in the nature is the normal or Gaussian distribution. This distribution is symmetric, and is defined by its expectation  $\mu$ and its variance $\sigma^2$, i.e. $N(\mu,\sigma^2)$. Its values range from $-\infty$ to $\infty$. Note that it is important to make the difference between the expectation of the distribution and the sample mean derived from this distribution. Indeed, these two will be equal only if all possible samples are included to compute sample mean.
 
 
-```{r}
+```{r echo=FALSE}
 
 #Plot of the density and quantiles of a normal distribution
-curve(dnorm(x, mean = 0, sd = 1), col = 'blue', from = -5, to = 5)
+curve(dnorm(x, mean = 0, sd = 1), col = 'blue', from = -5, to = 5, ylab="Standard normal density")
 abline(v = qnorm(c(0.25, 0.75), mean = 0, sd = 1), col= 'darkgreen')
 abline(v = qnorm(c(0.025, 0.975), mean = 0, sd = 1), col= 'darkred')
 abline(v = qnorm(c(0, 0.95), mean = 0, sd = 1), col= 'purple')
@@ -171,7 +171,7 @@ Essentially the arithmetic mean smoothes out small random variations between sam
 
 The chi-square distribution, represented by $\chi^2$ is defined at the sum of _k_ squared independent random variables, each following a normal distribution with mean 0 and variance equal to 1. The chi-square only has one parameter, _k_, called _degrees of freedom_. This distribution is often used for statistical testing. Its probability density function is shown below.
 
-```{r}
+```{r echo=FALSE}
 
 #Plot of the density and quantiles of a chi square distribution 
 #with 1 degree of freedom
@@ -182,7 +182,7 @@ abline(v = qchisq(c(0.025, 0.975), df = 1), col= 'darkred')
 
 Finally, the Student's t distribution is very important as it is used in the well-known Student's-t test to compare means between two samples.  This distribution is defined by its number of degrees of freedom $k$. This distribution, as the normal distribution, is symmetric, as we can see from its probability density function below. 
 
-```{r}
+```{r echo=FALSE}
 #Plot of the density and quantiles of a chi square distribution 
 #with 2 degree of freedom
 curve(dt(x, df = 2), col = 'blue', from = -10, to = 10)
@@ -192,7 +192,7 @@ abline(v = qt(c(0.025, 0.975), df = 2), col= 'darkred')
 
 This distribution has the same *bell* shape as the normal distribution. However, this shape is wider for the Student's-t, becoming narrower as the number of degrees of freedom increases.
 
-```{r}
+```{r echo=FALSE}
 par(mfrow = c(1, 3))
 x <- seq(from = -5, to = 5, by = .1)
 curve(dt(x, df = 1), col = 'purple', from = -10, to = 10, 
@@ -220,9 +220,9 @@ legend("topleft", legend = c("normal", "t"), lty = "solid",
 
 #### Probability *d*ensity function (e.g. `dnorm`, `dbinom`, `dunif`)
 
-```{r fig.height=5, fig.width=5, fig.show="hold", out.width="50%"}
+```{r fig.height=5, fig.width=5, fig.show="hold", out.width="50%", echo=FALSE}
 curve(dnorm(x, mean=0, sd=1), col="blue", from=-5, to=5,
-      ylab="Probability density", main="dnorm(1.0) = 0.24")
+      ylab="Density function", main="dnorm(1.0) = 0.24")
 arrows(x0=c(1, 1),             y0=c(par("usr")[3], dnorm(1)),
        x1=c(1, par("usr")[1]), y1=c(dnorm(1), dnorm(1)),
        length=0.15)
@@ -230,9 +230,9 @@ arrows(x0=c(1, 1),             y0=c(par("usr")[3], dnorm(1)),
 
 #### Cumulative *p*robability function (e.g. `pnorm`, `pbinom`, `punif`)
 
-```{r fig.height=5, fig.width=5, fig.show="hold", out.width="50%"}
+```{r fig.height=5, fig.width=5, fig.show="hold", out.width="50%", echo=FALSE}
 curve(dnorm(x, mean=0, sd=1), col="blue", from=-5, to=5,
-      ylab="Probability density", main="pnorm(1.0) = 0.84")
+      ylab="Density function", main="pnorm(1.0) = 0.84")
 ax <- seq(-5, 1, 0.01)
 polygon(c(-5, ax, 1), c(0, dnorm(ax), 0), col="lightblue", lty=2)
 arrows(x0=1, y0=par("usr")[3], x1=-0.2, y1=0.15, length=0.15)
@@ -247,9 +247,9 @@ arrows(x0=c(1, 1),             y0=c(par("usr")[3], pnorm(1)),
 
 #### *Q*uantile function (e.g. `qnorm`, `qbinom`, `qunif`)
 
-```{r fig.height=5, fig.width=5, fig.show="hold", out.width="50%"}
+```{r fig.height=5, fig.width=5, fig.show="hold", out.width="50%", echo=FALSE}
 curve(dnorm(x, mean=0, sd=1), col="blue", from=-5, to=5,
-      ylab="Probability density", main="qnorm(0.84) = 1.0")
+      ylab="Density function", main="qnorm(0.84) = 1.0")
 ax <- seq(-5, 1, 0.01)
 polygon(c(-5, ax, 1), c(0, dnorm(ax), 0), col="lightblue", lty=2)
 arrows(x0=1, y0=par("usr")[3], x1=-0.2, y1=0.15, length=0.15, code=1)
@@ -264,7 +264,7 @@ arrows(x0=c(1, 1),             y0=c(par("usr")[3], pnorm(1)),
 
 #### *R*andom number generator (e.g. `rnorm`, `rbinom`, `runif`)
 
-```{r fig.height=5, fig.width=5, fig.show="hold", out.width="50%"}
+```{r fig.height=5, fig.width=5, fig.show="hold", out.width="50%", echo=FALSE}
 set.seed(42)
 random_x <- rnorm(100)
 hist(random_x, col="blue", xlab="x", xlim=c(-3, 3),
@@ -429,7 +429,7 @@ We can see slightly different values for both variables in both groups. However,
 
 The standard deviation represents the amount of variation of values around their mean and can be computed as:
 
-$\sigma = \sqrt(\frac{\sum_{i}^{N}(x_{i}-\overline{x})^{2}}{N})$
+$\sigma = \sqrt{\frac{\sum_{i}^{N}(x_{i}-\overline{x})^{2}}{N}}$
 
 We will now compute the standard deviation for both variables in each group:
 
@@ -448,7 +448,7 @@ sd.variables.groupB
 
 A large standard deviation indicates that one or several observed values are very different from the mean, while a small standard deviation shows that most values are very close to the mean:
 
-```{r}
+```{r echo=FALSE}
 
 curve(dnorm(x, mean = 0, sd = 1),col ='blue', from = -5, to = 5)
 abline(v = 0, col = 'blue')
@@ -456,9 +456,10 @@ segments(x0 = 0, y0 = 0.1, x1 = 1, y1 = 0.1, col = 'blue')
 text(x = 0.4, y = 0.12, labels = 'sd', col = 'blue')
 
 ```
+
 We can display another normal distribution with a larger standard deviation:
 
-```{r}
+```{r echo=FALSE}
 
 curve(dnorm(x,0,1),col='blue', from=-5,to = 5)
 abline(v=0, col='blue')
@@ -474,7 +475,7 @@ the larger the standard deviation, the flatter the density function of a normal 
 
 When the data is coming from two distinct groups with different mean and standard deviation, computing the standard deviation of the two groups can lead to inflated standard deviation:
 
-```{r}
+```{r echo=FALSE}
 
 curve(dnorm(x,0,1),col='blue', from=-5,to = 10)
 abline(v=0, col='blue')
@@ -487,7 +488,7 @@ text(x = 6.4, y = 0.12, labels = 'sd', col = 'red')
 ```
 If we have for example the same number of samples in both groups, the mean of the two groups combined in that case would be around 2.5 (it might vary due to randomness and group size in real life). We will add a line to show the combined mean in the previous plot:
 
-```{r}
+```{r echo=FALSE}
 
 curve(dnorm(x,0,1),col='blue', from=-5,to = 10)
 abline(v=0, col='blue')
@@ -534,7 +535,7 @@ sd.gs
 
 As expected the standard deviations in group 1 and 2 separately are equal or close to 1. But the standard deviation of both groups combined is equal to `r round(sd.gs,1)`. 
 
-```{r}
+```{r echo=FALSE}
 
 curve(dnorm(x,0,1),col='blue', from=-5,to = 10)
 abline(v=0, col='blue')
@@ -551,7 +552,7 @@ text(x = 3.4, y = 0.07, labels = 'sd.gs', col = 'darkgreen')
 
 The standard deviation of both groups is misleading due to the shift in mean when both groups are combined. So in statistical test where we compare means we prefer the use of the pooled standard deviation:
 
-$\sigma_{pooled} = \sqrt(\frac{(n1-1)*s1^{2}+ (n2-1)*s2^{2}}{n1+n2-2})$
+$\sigma_\mathrm{pooled} = \sqrt{\frac{(n1-1)*s1^{2}+ (n2-1)*s2^{2}}{n1+n2-2}}$
 
 This pooled standard deviation is the square root of the weighted mean of the variance existing in each group. The more sample in a group the larger weight the variance of this group has in the average. The pooled standard deviation allows us to quantify the amount of variation existing around the means of the different group while the standard deviation of the combined group allows us to quantify the amount of variation around the mean of both groups combined. In the case of our simulated data the pooled standard deviation is:
 
@@ -616,7 +617,7 @@ By default the function `quantile` provides the minimum, the maximum and the qua
 
 We can also measure the amount of variation using robust meaures. One such measure is the median absolute variation (MAD). It is obtained by calculating the median value of the distance to the median, as described by the formula below:
 
-$MAD=\text{median}(|X-\widetilde{X}|)$
+$\mathrm{MAD}=\text{median}(|X-\widetilde{X}|)$
 
 ```{r}
 #computation of the median absolute deviation for group A
@@ -659,23 +660,33 @@ A next step when analysing data is to ask whether observed variables are related
 
 In the previous section, two unrelated variables were simulated. In this example we will create a dataset by simulating 10 more or less correlated variables.
 
-```{r, warning=F}
-library(mvtnorm)
-set.seed(352)
-sample.size <- 60
-
-corrs <- runif(45, -1, 1)
-corrs.matrix <- matrix(0, 10, 10)
-corrs.matrix[upper.tri(corrs.matrix, diag=FALSE)] <- corrs
-corrs.matrix[lower.tri(corrs.matrix, diag=FALSE)]  <- t(corrs.matrix)[lower.tri(corrs.matrix)]
-diag(corrs.matrix) <- 1
-standard.deviations <- rep(1,10)
-covs.matrix<- as.matrix(Matrix::nearPD(diag(standard.deviations) %*% corrs.matrix %*% diag(standard.deviations))$mat)
-
-dataset<-as.data.frame(rmvnorm( sample.size, mean=rep(0,10), covs.matrix))
-colnames(dataset) <- paste('Variable', c(1:10), sep='')
-
+```{r echo=FALSE, warning=FALSE}
+if(!file.exists("data/correlation_dataset.txt")) {
+  library(mvtnorm)
+  set.seed(352)
+  sample.size <- 60
+  
+  corrs <- runif(45, -1, 1)
+  corrs.matrix <- matrix(0, 10, 10)
+  corrs.matrix[upper.tri(corrs.matrix, diag=FALSE)] <- corrs
+  corrs.matrix[lower.tri(corrs.matrix, diag=FALSE)]  <- t(corrs.matrix)[lower.tri(corrs.matrix)]
+  diag(corrs.matrix) <- 1
+  standard.deviations <- rep(1,10)
+  covs.matrix <- as.matrix(Matrix::nearPD(diag(standard.deviations) %*% corrs.matrix %*% diag(standard.deviations))$mat)
+  
+  dataset<-as.data.frame(rmvnorm( sample.size, mean=rep(0,10), covs.matrix))
+  colnames(dataset) <- paste('Variable', c(1:10), sep='')
+  
+  write.table(dataset, "data/correlation_dataset.txt", sep="\t", row.names=FALSE)
+}
 ```
+
+```{r}
+dataset <- read.delim("data/correlation_dataset.txt")
+str(dataset)
+head(dataset)
+```
+
 
 By definition, the correlation is a measure of association between two variables. It  ranges from -1 to 1, is symmetric and scale-invariant. Being symmetric in this case means that the correlation between $x$ and $y$ is the same as the one between $y$ and $x$. Scale-invariant means that multiplying a set of values of a variable by a positive number (except 0) will not impact the correlation between this variable with any other variable. 
 
@@ -721,7 +732,7 @@ The function `cor` can also be used on the entire data matrix, yielding all pair
 ```{r}
 #computation of the Pearson correlation matrix between all #variables of the dataset
 correlation.pearson <- cor(dataset, method = 'pearson', use = 'complete.obs')
-correlation.pearson
+round(correlation.pearson[1:5,1:5], 2)
 ```
 
 A matrix of correlation as we just obtained can provide a lot of information about the variables. However, for illustration in a paper it is better to use a representation of the correlation matrix called `heatmap`:

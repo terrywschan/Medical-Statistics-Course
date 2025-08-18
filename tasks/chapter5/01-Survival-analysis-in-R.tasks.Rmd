@@ -15,7 +15,7 @@ migraine <- read.delim('../../migraine_data.txt')
 
 ### Quick tasks
 
-1. The dataset `leuk` from the library `MASS` contains time to death for 33 leukemia patients. Consider the event of interest to be death. To explore overall survival times (time to death) after leukemia diagnosis, plot the Kaplan-Meier curve of the data. 
+- The dataset `leuk` from the library `MASS` contains time to death for 33 leukemia patients. Consider the event of interest to be death. To explore overall survival times (time to death) after leukemia diagnosis, plot the Kaplan-Meier curve of the data. 
 
 ```{r}
 library(MASS)
@@ -33,8 +33,7 @@ leuk.surv <- Surv(leuk$time)
 plot(leuk.surv)
 ```
 
-2. Plot the Kaplan-Meier curve for the entire `migraine` data.
-
+- Plot the Kaplan-Meier curve for the entire `migraine` data.
 
 ```{r}
 migr.surv <- Surv(time = migraine$time, event = migraine$event)
