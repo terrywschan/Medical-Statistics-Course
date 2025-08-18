@@ -599,6 +599,14 @@ Most progression studies record time to event, and censoring then occurs when ei
 
 In some cases, a trial is stopped after a certain number of events is reached. As individuals who did not experience an event before the end of the trial are censored, these may correspond to those with longer time-to-event observations. So, the censoring process and the event probability are not independent. This is referred to as *type-II* censoring. To analyse data from such studies other models are required than the ones seen here.
 
+Typically, clinical trials are designed to have type-I censoring, such that censoring probability and time to event are independent.
+Trial designs usually involve the following steps:
+
+- Power calculation is performed to estimate the number of events required
+- The expected number of patients per year is estimated, given a desired minimum follow-up time
+- The probability of event occurrence per patient is also estimated
+- Finally, the running time of the study is estimated based on the above
+
 ### Competing risks
 
 Let us look again at the Melanoma data:
